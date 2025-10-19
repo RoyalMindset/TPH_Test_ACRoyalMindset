@@ -60,6 +60,29 @@ footer {text-align:center;font-size:12px;color:#777;margin:30px 0;}
   <input type="hidden" name="_subject" value="Nuevo resultado TPH - AC Royal Mindset">
 <input type="hidden" name="_replyto" value="acroyalmindset@gmail.com">
 </form>
+
+<input type="hidden" name="_subject" value="Nuevo resultado TPH - AC Royal Mindset">
+<input type="hidden" name="_replyto" value="acroyalmindset@gmail.com">
+<input type="hidden" name="fecha" id="fecha">
+
+<script>
+document.getElementById("fecha").value = new Date().toLocaleString();
+
+document.getElementById("tphForm").addEventListener("submit", function() {
+  const preguntas = document.querySelectorAll("label");
+  const selects = document.querySelectorAll("select");
+  preguntas.forEach((label, i) => {
+    if (selects[i]) {
+      const hidden = document.createElement("input");
+      hidden.type = "hidden";
+      hidden.name = "Pregunta " + (i + 1) + ": " + label.innerText.trim();
+      hidden.value = selects[i].value;
+      this.appendChild(hidden);
+    }
+  });
+});
+</script>
+
 </main>
 
 <section class="wrap confirmation" id="confirmation">
