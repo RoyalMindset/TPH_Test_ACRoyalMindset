@@ -57,8 +57,39 @@ footer {text-align:center;font-size:12px;color:#777;margin:30px 0;}
     <label>Teléfono</label><input type="tel" required>
     <div id="questions-area"></div>
     <button type="submit" class="submit-btn">Enviar respuestas</button>
-  <input type="hidden" name="_subject" value="Nuevo resultado TPH - AC Royal Mindset">
+    <!-- 🔸 Envío completo de datos + preguntas y respuestas -->
+<input type="hidden" name="_subject" value="Nuevo resultado TPH - AC Royal Mindset">
 <input type="hidden" name="_replyto" value="acroyalmindset@gmail.com">
+<input type="hidden" name="fecha" id="fecha">
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const form = document.querySelector("form");
+  if (!form) return;
+
+  // Adaugă automat data completării testului
+  const fechaField = document.getElementById("fecha");
+  if (fechaField) fechaField.value = new Date().toLocaleString("es-ES");
+
+  // La trimiterea formularului adaugă toate întrebările și datele
+  form.addEventListener("submit", function() {
+    const labels = document.querySelectorAll("label");
+    const inputs = document.querySelectorAll("input, select, textarea");
+
+    labels.forEach((label, i) => {
+      const field = inputs[i];
+      if (field && field.value) {
+        const hidden = document.createElement("input");
+        hidden.type = "hidden";
+        hidden.name = label.innerText.trim();
+        hidden.value = field.value;
+        form.appendChild(hidden);
+      }
+    });
+  });
+});
+</script>
+
 </form>
 </main>
 
