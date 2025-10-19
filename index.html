@@ -125,23 +125,33 @@ for(const[sec,arr]of Object.entries(paradigmas)){
   arr.forEach((q,i)=>{const row=document.createElement("tr");row.innerHTML=`<td class='question'>${q}</td>`+[1,2,3,4,5].map(n=>`<td><input type='radio' name='${sec}_${i}' value='${n}' required></td>`).join('');table.appendChild(row);});
   qa.appendChild(table);
 }
-document.getElementById("tph-form").addEventListener("submit",e=>{e.preventDefault();document.getElementById("form-wrap").style.display="none";const c=document.getElementById("confirmation");c.style.display="block";setTimeout(()=>c.classList.add("visible"),100);});
 </script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   const form = document.getElementById("tphForm");
+  const confirmation = document.getElementById("confirmation");
+  const formWrap = document.getElementById("form-wrap");
+
   if (form) {
     form.addEventListener("submit", async function(e) {
       e.preventDefault();
       const data = new FormData(form);
+
       try {
+        // Trimite datele către Formspree
         await fetch("https://formspree.io/f/xeordaqq", {
           method: "POST",
           body: data,
           headers: { 'Accept': 'application/json' }
         });
-        window.location.href = "https://paypal.me/ACRoyalMindset/4.99";
+
+        // Afișează secțiunea de confirmare (Bizum + PayPal)
+        if (formWrap) formWrap.style.display = "none";
+        if (confirmation) {
+          confirmation.style.display = "block";
+          setTimeout(() => confirmation.classList.add("visible"), 100);
+        }
       } catch (error) {
         alert("Error al enviar el formulario. Inténtalo nuevamente.");
       }
